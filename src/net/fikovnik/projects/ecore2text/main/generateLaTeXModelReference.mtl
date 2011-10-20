@@ -28,7 +28,7 @@
 	pdf_fname : String = 'figures/'.concat(class.name).concat('.pdf');
 }]
 [file (src_fname, false, 'UTF-8')]
-['['/][class.name/]|[for (attrib : EAttribute | class.eAllAttributes) separator(';')][attrib.name/] : [attrib.eAttributeType.name/][/for][']'/]
+['['/][class.name/]{bg:lightgray}|[for (attrib : EAttribute | class.eAllAttributes) separator(';')][attrib.name/] : [attrib.eAttributeType.name/][/for][']'/]
 [for (superClass : EClass | class.eSuperTypes)]
 ['['/][superClass.name/][']'/]^['['/][class.name/][']'/]
 [/for]
@@ -39,7 +39,8 @@
 % yuml.me :: [pdf_fname/] :: [src_fname/]
 \begin{figure}['['/]H[']'/]
 \centering
-\includegraphics['['/]scale=.5[']'/]{reference/[pdf_fname/]}
+\includegraphics['['/]scale=.7[']'/]{reference/[pdf_fname/]}
+\caption{[class.name/] class schema}
 \end{figure}
 [/template]
 
@@ -51,12 +52,17 @@
 [documentation(class, '')/]
 
 [if (class.eAllStructuralFeatures->notEmpty())]
-\paragraph{Attributes}
-\begin{itemize}
+\paragraph*{Attributes}
+\begin{center}
+\rowcolors{2}{white}{lightgray}
+\begin{tabular}{ | l | l | l | p{5cm} |}
+\hline
+\textbf{Name} & \textbf{Type} & \textbf{Description} \\ \hline
 [for (feature : EStructuralFeature | class.eAllStructuralFeatures->sortedBy(name))]
-\item \verb+[feature.name/] : [feature.formatType()/]+[documentation(feature,' -')/]
+\small \verb+[feature.name/]+ & \small \verb+[feature.formatType()/]+ & \small [documentation(feature,'')/] \\ \hline
 [/for]
-\end{itemize}
+\end{tabular}
+\end{center}
 [/if]
 [/template]
 
@@ -77,6 +83,8 @@
 
 \section{Model Reference}
 \label{sec:model-reference}
+
+\definecolor{lightgray}{RGB}{247,247,247}
 
 [generatePackageReference(rootPackage)/]
 [for (pkg : EPackage | rootPackage.eSubpackages)]
