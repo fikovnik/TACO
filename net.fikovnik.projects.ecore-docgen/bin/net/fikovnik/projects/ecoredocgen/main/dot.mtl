@@ -31,7 +31,7 @@ THE SOFTWARE.
  */]
 [module dot('http://www.eclipse.org/emf/2002/Ecore')]
 
-[import net::fikovnik::projects::ecore2text::main::uml /]
+[import net::fikovnik::projects::ecoredocgen::main::uml /]
 
 [query private getAllDependingClasses(class : EClass, superTypes : Boolean, referenceTypes : Boolean) : Set(EClass) =
 	if (superTypes and referenceTypes) then
@@ -51,9 +51,12 @@ THE SOFTWARE.
 [class.name/]:port -> [reference.eReferenceType.name/]:port ['['/] 
   arrowhead = "vee" 
   arrowtail = [if (reference.containment)]"diamond"[else]"none"[/if]
-  headlabel = "[reference.genFeatureLabel()/]"
-  labeldistance = "1.7"
-  constraint = "false"
+  taillabel = <<TABLE border="0" cellborder="0" cellspacing="0" cellpadding="0"><TR><TD></TD></TR></TABLE>>
+  label = <<TABLE border="0" cellborder="0" cellspacing="0" cellpadding="0"><TR><TD>- [reference.name/]</TD></TR></TABLE>>
+  headlabel = <<TABLE border="0" cellborder="0" cellspacing="0" cellpadding="0"><TR><TD>[reference.genMultiplicity()/]</TD></TR></TABLE>>
+  minlen = "3"
+  labeldistance = "3.0"
+  labelangle = "20.0"
 [']'/]
 
 [/template]
@@ -61,8 +64,8 @@ THE SOFTWARE.
 [template private renderGeneralization(superType : EClass, subType : EClass)]
 [superType.name/]:port -> [subType.name/]:port ['['/] 
   arrowhead = "none"
-  arrowtail = "enormal"
-  constraint = "true"
+  arrowtail = "onormal"
+  minlen = "1.5"
 [']'/]
 
 [/template]
@@ -82,7 +85,7 @@ THE SOFTWARE.
 <TR><TD>[renderClassName(class)/]</TD></TR>
 </TABLE>
 </TD></TR>
-[if (class.eAttributes->notEmpty())]
+[if (attributes and class.eAttributes->notEmpty())]
 <TR><TD>
 <TABLE border="1" cellborder="0" cellpadding="3" cellspacing="0" align="left">
 [for (attribute : EAttribute | class.eAttributes)]
@@ -97,7 +100,7 @@ THE SOFTWARE.
 [/template]
 
 [template public genClass(class : EClass, superClasses : Boolean, attributes : Boolean, references : Boolean, color : String)]
-[class.getAllDependingClasses(superClasses, references).renderClass(superClasses,'white') /]
+[class.getAllDependingClasses(superClasses, references).renderClass(false,'white') /]
 
 [class.renderClass(attributes, color)/]
 
@@ -117,30 +120,32 @@ FIXME: this does not work from whatever reason
 [pkg.eAllContents(EClass).genClass(true, false, true, 'white') /]
 [/comment]
 [for (class : EClass | pkg.eClassifiers->select(c | c.oclIsKindOf(EClass))->collect(c | c.oclAsType(EClass)))]
-[class.genClass(true, false, true, 'white')/]
+[class.genClass(true, true, true, 'white')/]
 [/for]
 
 [/template]
 
 [template public genPrologue(traceabilityContext : OclAny)]
 digraph G {
-  ranksep=0.8
-  nodesep=0.85
+//  ranksep=0.8
+//  nodesep=0.85
 
-  rankdir=TB
+  rankdir = TD;
+  compound=true;
   fontname = "Arial"
-  fontsize = 8
+  fontsize = "8"
 
   node  ['['/]
     fontname = "Arial"
-    fontsize = 12
+    fontsize = "12"
+	margin = "0"
     shape = "plaintext"
   [']'/]
 
   edge  ['['/]
     fontname = "Arial"
-    fontsize = 9
-    dir=both
+    fontsize = "9"
+    dir = "both"
   [']'/]	
 [/template]
 

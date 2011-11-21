@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Acceleo Ecore2text Module Runtime Plug-in
 Bundle-SymbolicName: net.fikovnik.projects.ecore2text
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: net.fikovnik.projects.ecore2text.Activator
+Bundle-Activator: net.fikovnik.projects.ecoredocgen.Activator
 Bundle-Vendor: Eclipse Modeling Project
 Require-Bundle: org.eclipse.core.runtime, 
  org.eclipse.emf.ecore,
@@ -18,5 +18,5 @@ Require-Bundle: org.eclipse.core.runtime,
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Eclipse-LazyStart: true
-Export-Package: net.fikovnik.projects.ecore2text.main
+Export-Package: net.fikovnik.projects.ecoredocgen.main
 

@@ -33,7 +33,7 @@ THE SOFTWARE.
 [if (upperBound = -1)]*[else][upperBound/][/if]
 [/template]
 
-[template private renderMultiplicity(feature : EStructuralFeature)]
+[template public genMultiplicity(feature : EStructuralFeature)]
 [if (feature.lowerBound = feature.upperBound)][if (feature.upperBound = -1)]['['/]*[']'/][elseif not (feature.upperBound = 1)]['['/][feature.upperBound/][']'/][/if][else]['['/][feature.lowerBound/]..[renderUpperBound(feature.upperBound)/][']'/][/if]
 [/template]
 
@@ -42,13 +42,13 @@ unknown feature [feature.name/]
 [/template]
 
 [template public genFeatureLabelWithType(attribute : EAttribute)]
-- [attribute.name /] : [attribute.eAttributeType.name/][renderMultiplicity(attribute)/]
+- [attribute.name /] : [attribute.eAttributeType.name/][genMultiplicity(attribute)/]
 [/template]
 
 [template public genFeatureLabelWithType(reference : EReference)]
-- [reference.name /] : [reference.eReferenceType.name/][renderMultiplicity(reference)/]
+- [reference.name /] : [reference.eReferenceType.name/][genMultiplicity(reference)/]
 [/template]
 
 [template public genFeatureLabel(feature : EStructuralFeature)]
-- [feature.name /] [renderMultiplicity(feature)/]
+- [feature.name /] [genMultiplicity(feature)/]
 [/template]

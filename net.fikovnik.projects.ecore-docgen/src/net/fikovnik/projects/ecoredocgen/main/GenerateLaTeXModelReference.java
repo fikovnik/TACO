@@ -8,7 +8,7 @@
  * Contributors:
  *     Obeo - initial API and implementation
  *******************************************************************************/
-package net.fikovnik.projects.ecore2text.main;
+package net.fikovnik.projects.ecoredocgen.main;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,7 +35,7 @@ public class GenerateLaTeXModelReference extends AbstractAcceleoGenerator {
      *
      * @generated
      */
-    public static final String MODULE_FILE_NAME = "/net/fikovnik/projects/ecore2text/main/generateLaTeXModelReference";
+    public static final String MODULE_FILE_NAME = "/net/fikovnik/projects/ecoredocgen/main/generateLaTeXModelReference";
     
     /**
      * The name of the templates that are to be generated.

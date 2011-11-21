@@ -8,7 +8,7 @@
  * Contributors:
  *     Obeo - initial API and implementation
  *******************************************************************************/
-package net.fikovnik.projects.ecore2text;
+package net.fikovnik.projects.ecoredocgen;
 
 import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;

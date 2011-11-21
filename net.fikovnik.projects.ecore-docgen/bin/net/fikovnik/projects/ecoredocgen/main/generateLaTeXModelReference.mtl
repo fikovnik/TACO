@@ -28,8 +28,8 @@ THE SOFTWARE.
  */]
 [module generateLaTeXModelReference('http://www.eclipse.org/emf/2002/Ecore')/]
 
-[import net::fikovnik::projects::ecore2text::main::uml /]
-[import net::fikovnik::projects::ecore2text::main::dot /]
+[import net::fikovnik::projects::ecoredocgen::main::uml /]
+[import net::fikovnik::projects::ecoredocgen::main::dot /]
 
 [query public annotationDetails(element : EModelElement, source : String, detail : String) : Set(String) = 
 	element.eAnnotations
