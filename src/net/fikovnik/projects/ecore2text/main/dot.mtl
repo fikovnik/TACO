@@ -1,0 +1,149 @@
+[comment encoding = UTF-8 /]
+[comment]
+Copyright (C) 2011 by Filip Krikava
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+[/comment]
+
+
+[**
+ * Ecore to graphviz dot language generator.
+ * 
+ * TODO: separators
+ * 
+ * @author Filip Krikava
+ */]
+[module dot('http://www.eclipse.org/emf/2002/Ecore')]
+
+[import net::fikovnik::projects::ecore2text::main::uml /]
+
+[query private getAllDependingClasses(class : EClass, superTypes : Boolean, referenceTypes : Boolean) : Set(EClass) =
+	if (superTypes and referenceTypes) then
+		Set(EClass){}
+			->union(class.eSuperTypes)
+			->union(class.eReferences->collect(eReferenceType)->asSet())
+	else if (superTypes) then
+		Set(EClass){}
+			->union(class.eSuperTypes)
+		else
+			Set(EClass){}
+		endif
+	endif
+ /]
+
+[template private renderReference(reference : EReference, class : EClass)]
+[class.name/]:port -> [reference.eReferenceType.name/]:port ['['/] 
+  arrowhead = "vee" 
+  arrowtail = [if (reference.containment)]"diamond"[else]"none"[/if]
+  headlabel = "[reference.genFeatureLabel()/]"
+  labeldistance = "1.7"
+  constraint = "false"
+[']'/]
+
+[/template]
+
+[template private renderGeneralization(superType : EClass, subType : EClass)]
+[superType.name/]:port -> [subType.name/]:port ['['/] 
+  arrowhead = "none"
+  arrowtail = "enormal"
+  constraint = "true"
+[']'/]
+
+[/template]
+
+[template private renderClassName(class : EClass)]
+[if (class.abstract)]<I>[/if][class.name /][if (class.abstract)]</I>[/if]
+[/template]
+
+[**
+ * Generates only the class node, no references, no generalizations. 
+ */]
+[template private renderClass(class : EClass, attributes : Boolean, color : String)]
+[class.name/] ['['/] label = <
+<TABLE bgcolor="[color/]" border="0" cellspacing="0" cellpadding="0" cellborder="0" port="port">
+<TR><TD>
+<TABLE border="1" cellborder="0" cellpadding="3" cellspacing="0" align="left">
+<TR><TD>[renderClassName(class)/]</TD></TR>
+</TABLE>
+</TD></TR>
+[if (class.eAttributes->notEmpty())]
+<TR><TD>
+<TABLE border="1" cellborder="0" cellpadding="3" cellspacing="0" align="left">
+[for (attribute : EAttribute | class.eAttributes)]
+<TR><TD align="left">[attribute.genFeatureLabelWithType()/]</TD></TR>
+[/for]
+</TABLE>
+</TD></TR>
+[/if]
+</TABLE>
+>['];'/]
+
+[/template]
+
+[template public genClass(class : EClass, superClasses : Boolean, attributes : Boolean, references : Boolean, color : String)]
+[class.getAllDependingClasses(superClasses, references).renderClass(superClasses,'white') /]
+
+[class.renderClass(attributes, color)/]
+
+[if (superClasses)]
+[class.eSuperTypes.renderGeneralization(class)/]
+[/if]
+
+[if (references)]
+[class.eReferences.renderReference(class)/]
+[/if]
+
+[/template]
+
+[template public genPackage(pkg : EPackage)]
+[comment]
+FIXME: this does not work from whatever reason
+[pkg.eAllContents(EClass).genClass(true, false, true, 'white') /]
+[/comment]
+[for (class : EClass | pkg.eClassifiers->select(c | c.oclIsKindOf(EClass))->collect(c | c.oclAsType(EClass)))]
+[class.genClass(true, false, true, 'white')/]
+[/for]
+
+[/template]
+
+[template public genPrologue(traceabilityContext : OclAny)]
+digraph G {
+  ranksep=0.8
+  nodesep=0.85
+
+  rankdir=TB
+  fontname = "Arial"
+  fontsize = 8
+
+  node  ['['/]
+    fontname = "Arial"
+    fontsize = 12
+    shape = "plaintext"
+  [']'/]
+
+  edge  ['['/]
+    fontname = "Arial"
+    fontsize = 9
+    dir=both
+  [']'/]	
+[/template]
+
+[template public genEpilogue(traceabilityContext : OclAny)]
+};
+[/template]

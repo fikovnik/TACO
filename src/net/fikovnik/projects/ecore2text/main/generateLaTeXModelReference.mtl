@@ -1,83 +1,128 @@
 [comment encoding = UTF-8 /]
+[comment]
+Copyright (C) 2011 by Filip Krikava
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+[/comment]
+
+[**
+ * ECore to LaTeX generator
+ * 
+ * @author Filip Krikava
+ */]
 [module generateLaTeXModelReference('http://www.eclipse.org/emf/2002/Ecore')/]
 
-[query public annotationDetails(element : EModelElement, source : String, detail : String) : Set(String) = element.eAnnotations->select(a | a.source = source).details->select(d | d.key = detail).value->asSet() /]
+[import net::fikovnik::projects::ecore2text::main::uml /]
+[import net::fikovnik::projects::ecore2text::main::dot /]
 
-[template public documentation(element : EModelElement, prefix : String) { docs : Set(String) = annotationDetails(element, 'http://www.eclipse.org/emf/2002/GenModel', 'documentation'); }]
+[query public annotationDetails(element : EModelElement, source : String, detail : String) : Set(String) = 
+	element.eAnnotations
+		->select(a | a.source = source).details
+			->select(d | d.key = detail).value->asSet()
+/]
+
+[template private documentation(element : EModelElement, prefix : String) { docs : Set(String) = annotationDetails(element, 'http://www.eclipse.org/emf/2002/GenModel', 'documentation'); }]
 [if (docs->notEmpty())][prefix/][for (doc : String | docs) separator('\n')][doc/][/for][/if]
 [/template]
 
-[template public formatType (feature : EStructuralFeature) ]
-% unsupported feature [feature.name/]
+[template private includeGraphviz(source : String, target : String)]
+% textpp graphviz pdf, [source/], [target/]
 [/template]
 
-[template public formatType (feature : EAttribute) ]
-[feature.eAttributeType.name/]
-[/template]
-
-[template public formatTypeMany(many : EBoolean)]
-[if (many)]*[else]1[/if]
-[/template]
-
-[template public formatType (feature : EReference) ]
-[feature.eReferenceType.name/] ['['/][feature.lowerBound/]..[formatTypeMany(feature.many)/][']'/]
-[/template]
-
-[template public createYumlClassDiagram(class : EClass) post (trim()) {
-	src_fname : String = 'yuml/'.concat(class.name).concat('.yuml');
-	pdf_fname : String = 'figures/'.concat(class.name).concat('.pdf');
-}]
-[file (src_fname, false, 'UTF-8')]
-['['/][class.name/]{bg:lightgray}|[for (attrib : EAttribute | class.eAllAttributes) separator(';')][attrib.name/] : [attrib.eAttributeType.name/][/for][']'/]
-[for (superClass : EClass | class.eSuperTypes)]
-['['/][superClass.name/][']'/]^['['/][class.name/][']'/]
-[/for]
-[for (ref : EReference | class.eAllReferences)]
-['['/][class.name/][']'/][if (ref.containment)]<>[/if][ref.lowerBound/]-[ref.name/]>[formatTypeMany(ref.many)/]['['/][ref.eReferenceType.name/][']'/]
-[/for]
-[/file]
-% yuml.me :: [pdf_fname/] :: [src_fname/]
+[template private includeGraphics(imagePath : String, caption : String)]
 \begin{figure}['['/]H[']'/]
 \centering
-\includegraphics['['/]scale=.7[']'/]{reference/[pdf_fname/]}
-\caption{[class.name/] class schema}
+\includegraphics['['/]max size={\textwidth}{\textheight},scale=.7[']'/]{[imagePath/]}
+\caption{[caption/]}
 \end{figure}
 [/template]
 
-[template public generateClassReference(class : EClass)]
+[template public genClassDiagramForClass(class : EClass) post (trim()) {
+	src_fname : String = 'dot/'.concat(class.name).concat('.dot');
+	pdf_fname : String = 'figures/'.concat(class.name).concat('.pdf');
+}]
+
+[file (src_fname, false, 'UTF-8')]
+[genPrologue() /]
+[class.genClass(true, true, true, 'grey')/]
+[genEpilogue() /]
+[/file]
+
+[includeGraphviz(src_fname, pdf_fname)/]
+[includeGraphics('reference/'.concat(pdf_fname), 'Class '.concat(class.name).concat(' - class diagram'))/]
+[/template]
+
+[template public genClassDiagramForPackage(pkg : EPackage) post (trim()) {
+	src_fname : String = 'dot/'.concat(pkg.name).concat('.dot');
+	pdf_fname : String = 'figures/'.concat(pkg.name).concat('.pdf');
+}]
+[file (src_fname, false, 'UTF-8')]
+[genPrologue() /]
+[pkg.genPackage() /]
+[genEpilogue() /]
+[/file]
+
+[includeGraphviz(src_fname, pdf_fname)/]
+[includeGraphics('reference/'.concat(pdf_fname), 'Package '.concat(pkg.name).concat(' - class diagram'))/]
+[/template]
+
+[template public genClassReference(classifier : EClassifier)]
+unknown classifier [classifier.name/]
+[/template]
+
+[template public genClassReference(class : EClass)]
 \subsubsection{Class: [class.name/]}
 \label{sec:class-ref-[class.name/]}
 
-[createYumlClassDiagram(class)/]
-[documentation(class, '')/]
+[class.genClassDiagramForClass() /]
 
-[if (class.eAllStructuralFeatures->notEmpty())]
+[class.documentation('')/]
+
+[if (class.eStructuralFeatures->notEmpty())]
 \paragraph*{Attributes}
 \begin{center}
 \rowcolors{2}{white}{lightgray}
-\begin{tabular}{ | l | l | l | p{5cm} |}
+\begin{tabular}{ | l | p{.6\textwidth} |}
 \hline
-\textbf{Name} & \textbf{Type} & \textbf{Description} \\ \hline
-[for (feature : EStructuralFeature | class.eAllStructuralFeatures->sortedBy(name))]
-\small \verb+[feature.name/]+ & \small \verb+[feature.formatType()/]+ & \small [documentation(feature,'')/] \\ \hline
+\textbf{Attribute} & \textbf{Description} \\ \hline
+[for (feature : EStructuralFeature | class.eStructuralFeatures->sortedBy(name))]
+\small [feature.genFeatureLabelWithType()/] & \small [feature.documentation('')/] \\ \hline
 [/for]
 \end{tabular}
 \end{center}
 [/if]
 [/template]
 
-[template public generatePackageReference(pkg : EPackage)]
+[template public genPackageReference(pkg : EPackage)]
 \subsection{Package: [pkg.name/]}
 \label{sec:pkg-ref-[pkg.name/]}
 
-[documentation(pkg, '')/]
+[pkg.genClassDiagramForPackage()/]
+
+[pkg.documentation('')/]
 
 [for (class : EClass | pkg.eClassifiers->select(c | c.oclIsKindOf(EClass))->collect(c | c.oclAsType(EClass)))]
-[generateClassReference(class)/]
+[class.genClassReference() /]
 [/for]
 [/template]
 
-[template public generateLaTeXModelReference(rootPackage : EPackage) ? (rootPackage.eSuperPackage->isEmpty())]
+[template public genLaTeXModelReference(rootPackage : EPackage) ? (rootPackage.eSuperPackage->isEmpty())]
 [comment @main /]
 [file ('model-reference.tex', false, 'UTF-8')]
 
@@ -86,10 +131,9 @@
 
 \definecolor{lightgray}{RGB}{247,247,247}
 
-[generatePackageReference(rootPackage)/]
-[for (pkg : EPackage | rootPackage.eSubpackages)]
-[generatePackageReference(pkg)/]
-[/for]
+[rootPackage.genPackageReference()/]
+
+[rootPackage.eSubpackages.genPackageReference()/]
 
 [/file]	
 [/template]

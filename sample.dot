@@ -1,0 +1,78 @@
+digraph G {
+  ranksep=0.8
+  nodesep=0.85
+  nojustify=true
+
+	rankdir=LR
+    fontname = "Arial"
+    fontsize = 8
+
+    node [
+        fontname = "Arial"
+        fontsize = 12
+        shape = "plaintext"
+    ]
+
+    edge [
+        fontname = "Arial"
+        fontsize = 9
+        dir=both
+    ]
+
+AdaptiveElementType [ label = <
+<TABLE border="0" cellspacing="0" cellpadding="0" cellborder="0" port="port">
+<TR><TD>
+<TABLE border="1" cellborder="0" CELLPADDING="3" CELLSPACING="0" ALIGN="LEFT">
+<TR><TD>
+<I>AdaptiveElementType</I>
+</TD></TR>
+</TABLE>
+</TD></TR>
+<TR><TD>
+<TABLE border="1" cellborder="0" CELLPADDING="0" CELLSPACING="5" ALIGN="LEFT">
+<TR><TD align="left">+ name1 : String</TD></TR>
+</TABLE>
+</TD></TR>
+</TABLE>
+>];
+
+SensorType [ label = <
+<TABLE border="0" cellspacing="0" cellpadding="0" cellborder="0" port="port">
+<TR><TD>
+<TABLE border="1" cellborder="0" CELLPADDING="3" CELLSPACING="0" ALIGN="LEFT">
+<TR><TD>
+SensorType
+</TD></TR>
+</TABLE>
+</TD></TR>
+<TR><TD>
+<TABLE border="1" cellborder="0" CELLPADDING="0" CELLSPACING="5" ALIGN="LEFT">
+<TR><TD>+ name1 : String</TD></TR>
+</TABLE>
+</TD></TR>
+</TABLE>
+>];
+
+edge [
+  arrowhead = "none"
+  arrowtail = "empty"
+  taillabel = ""
+  headlabel = ""
+  constraint = true
+]
+
+AdaptiveElementType:port -> SensorType:port;
+
+edge [
+  arrowhead = "vee"
+  arrowtail = "diamond"
+  headlabel = "-sensors[1..*]"
+  taillabel = "b"
+  labeldistance = "1.7"
+  constraint = "false"
+]
+
+AdaptiveElementType:port -> SensorType:port;
+
+
+};
