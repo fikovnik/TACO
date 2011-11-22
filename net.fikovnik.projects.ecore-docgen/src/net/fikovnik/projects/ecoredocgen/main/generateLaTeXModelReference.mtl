@@ -48,7 +48,7 @@ THE SOFTWARE.
 [template private includeGraphics(imagePath : String, caption : String)]
 \begin{figure}['['/]H[']'/]
 \centering
-\includegraphics['['/]max size={\textwidth}{\textheight},scale=.7[']'/]{[imagePath/]}
+\IncludeGraphics['['/]scale=.7[']'/]{[imagePath/]}
 \caption{[caption/]}
 \end{figure}
 [/template]
@@ -125,6 +125,20 @@ unknown classifier [classifier.name/]
 [template public genLaTeXModelReference(rootPackage : EPackage) ? (rootPackage.eSuperPackage->isEmpty())]
 [comment @main /]
 [file ('model-reference.tex', false, 'UTF-8')]
+\makeatletter
+\newbox\image@box%
+\newdimen\image@width%
+\newcommand\IncludeGraphics['['/]2[']'/]['['/]\@empty[']'/]{%
+  \setbox\image@box=\hbox{\includegraphics['['/]#1[']'/]{#2}}%
+  \image@width\wd\image@box%
+  \ifdim \image@width>\linewidth%
+    \setbox\image@box=\hbox{\includegraphics['['/]width=\linewidth[']'/]{#2}}%
+    \box\image@box%
+  \else%
+    \includegraphics['['/]#1[']'/]{#2}%
+  \fi%
+}
+\makeatother
 
 \section{Model Reference}
 \label{sec:model-reference}
