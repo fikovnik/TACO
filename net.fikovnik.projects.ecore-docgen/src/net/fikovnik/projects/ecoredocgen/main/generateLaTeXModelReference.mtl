@@ -54,8 +54,8 @@ THE SOFTWARE.
 [/template]
 
 [template public genClassDiagramForClass(class : EClass) post (trim()) {
-	src_fname : String = 'dot/'.concat(class.name).concat('.dot');
-	pdf_fname : String = 'figures/'.concat(class.name).concat('.pdf');
+	src_fname : String = 'dot/class_'.concat(class.name).concat('.dot');
+	pdf_fname : String = 'figures/class_'.concat(class.name).concat('.pdf');
 }]
 
 [file (src_fname, false, 'UTF-8')]
@@ -69,8 +69,8 @@ THE SOFTWARE.
 [/template]
 
 [template public genClassDiagramForPackage(pkg : EPackage) post (trim()) {
-	src_fname : String = 'dot/'.concat(pkg.name).concat('.dot');
-	pdf_fname : String = 'figures/'.concat(pkg.name).concat('.pdf');
+	src_fname : String = 'dot/package_'.concat(pkg.name).concat('.dot');
+	pdf_fname : String = 'figures/package_'.concat(pkg.name).concat('.pdf');
 }]
 [file (src_fname, false, 'UTF-8')]
 [genPrologue() /]
