@@ -1,1 +1,3 @@
-net.fikovnik.projects.ecore-docgen/bin/
+.project
+.classpath
+target

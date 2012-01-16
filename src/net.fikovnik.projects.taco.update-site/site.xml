@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/net.fikovnik.projects.taco_1.0.0.qualifier.jar" id="net.fikovnik.projects.taco.feature" version="1.0.0.qualifier" os="linux,macosx" ws="cocoa,gtk" arch="x86,x86_64">
+      <category name="net.fikovnik.projects.taco.update-site"/>
+   </feature>
+   <category-def name="net.fikovnik.projects.taco.update-site" label="TACO - Documentation Generator for Ecore Model"/>
+</site>

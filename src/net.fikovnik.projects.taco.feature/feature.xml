@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="net.fikovnik.projects.taco.feature"
+      label="TACO Feature"
+      version="1.0.0.qualifier"
+      os="linux,macosx,win32"
+      ws="cocoa,gtk,win32"
+      arch="x86,x86_64">
+
+   <description url="http://github.com/fikovnik/TACO">
+      Documentation Generator for Ecore Models
+   </description>
+
+   <copyright url="http://www.eclipse.org/legal/epl-v10.html">
+      Copyright (c) 2012 Filip Krikava
+   This program and the accompanying materials are made available
+      under the terms of the Eclipse Public License v1.0 which accompanies
+   this distribution, and is available at
+      http://www.eclipse.org/legal/epl-v10.html
+   </copyright>
+
+   <license url="http://www.eclipse.org/legal/epl-v10.html">
+      %license
+   </license>
+
+   <requires>
+      <import feature="org.eclipse.platform" version="3.7.0.v20110530-9gF7UHNFFt4cwE-pkZDJ7oz-mj4OSEIlu9SEv0f"/>
+      <import feature="org.eclipse.emf.sdk" version="2.7.0.v20110606-0949"/>
+      <import feature="org.eclipse.acceleo.sdk" version="3.1.1.v20110914-0246"/>
+   </requires>
+
+   <plugin
+         id="net.fikovnik.projects.taco.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="net.fikovnik.projects.taco.latex"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="net.fikovnik.projects.taco.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>
