@@ -1,8 +1,8 @@
-package net.fikovnik.projects.taco.ui;
+package net.fikovnik.projects.taco.ui.util;
 
 import java.lang.reflect.InvocationTargetException;
 
-import net.fikovnik.projects.taco.core.util.PlatformUtils;
+import net.fikovnik.projects.taco.core.util.PlatformUtil;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -14,10 +14,10 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.statushandlers.StatusManager;
 
-public final class PlatformUIUtils {
+public final class PlatformUIUtil {
 
 	// No instance
-	private PlatformUIUtils() {
+	private PlatformUIUtil() {
 
 	}
 
@@ -34,7 +34,7 @@ public final class PlatformUIUtils {
 	 *            parent shell
 	 * @param t
 	 *            exception
-	 * @see PlatformUIUtils#showExceptionDialog(String, String, String,
+	 * @see PlatformUIUtil#showExceptionDialog(String, String, String,
 	 *      Throwable)
 	 * @see ErrorDialog#openError(Shell, String, String, IStatus)
 	 */
@@ -58,7 +58,7 @@ public final class PlatformUIUtils {
 	 *            pluginId which code caused the exception
 	 * @param t
 	 *            exception
-	 * @see PlatformUIUtils#showExceptionDialog(String, String, String, Shell,
+	 * @see PlatformUIUtil#showExceptionDialog(String, String, String, Shell,
 	 *      Throwable)
 	 * @see ErrorDialog#openError(Shell, String, String, IStatus)
 	 */
@@ -107,7 +107,7 @@ public final class PlatformUIUtils {
 
 	public static void handleError(String message, Throwable cause,
 			String pluginId) {
-		IStatus status = PlatformUtils.createError(message, cause, pluginId);
+		IStatus status = PlatformUtil.createError(message, cause, pluginId);
 		handleStatus(status);
 	}
 
@@ -137,14 +137,14 @@ public final class PlatformUIUtils {
 	 */
 	public static void handleInterruptedException(InterruptedException e,
 			String pluginId) {
-		IStatus status = PlatformUtils.createInfo("Action interrupted", e,
+		IStatus status = PlatformUtil.createInfo("Action interrupted", e,
 				pluginId);
 		StatusManager.getManager().handle(status, StatusManager.LOG);
 	}
 
 	public static void handleInvocationException(String action,
 			InvocationTargetException e, String pluginId) {
-		IStatus status = PlatformUtils.createError("Invocation of: " + action
+		IStatus status = PlatformUtil.createError("Invocation of: " + action
 				+ " failed", e, pluginId);
 		StatusManager.getManager().handle(status,
 				StatusManager.BLOCK | StatusManager.LOG);

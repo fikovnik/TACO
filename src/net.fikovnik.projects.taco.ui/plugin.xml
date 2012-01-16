@@ -4,9 +4,10 @@
    <extension
          point="org.eclipse.ui.exportWizards">
       <wizard
-            class="net.fikovnik.projects.taco.ui.wizards.EcoreDocumentationExportWizard"
-            id="net.fikovnik.projects.ecoredocgen.ui.EcoreDocExportWizard"
-            name="Ecore documentation">
+            class="net.fikovnik.projects.taco.ui.wizard.EcoreDocumentationExportWizard"
+            icon="icons/default.gif"
+            id="net.fikovnik.projects.taco.ui.wizard.EcoreDocumentationExportWizard"
+            name="Ecore Documentation">
       </wizard>
    </extension>
 

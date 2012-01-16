@@ -12,7 +12,7 @@ import org.eclipse.core.runtime.Status;
  * @author fikr
  * 
  */
-public final class PlatformUtils {
+public final class PlatformUtil {
 
 	public static final String FILE_SEPARATOR = System
 			.getProperty("file.separator");
