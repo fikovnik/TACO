@@ -13,7 +13,8 @@
 	<modules>
 		<module>../net.fikovnik.projects.taco.core</module>
 		<module>../net.fikovnik.projects.taco.ui</module>
-		<module>../net.fikovnik.projects.taco.latex</module>
+		<module>../net.fikovnik.projects.taco.latex.core</module>
+		<module>../net.fikovnik.projects.taco.latex.ui</module>
 		<module>../net.fikovnik.projects.taco.target-platform</module>
 		<module>../net.fikovnik.projects.taco.feature</module>
 		<module>../net.fikovnik.projects.taco.update-site</module>

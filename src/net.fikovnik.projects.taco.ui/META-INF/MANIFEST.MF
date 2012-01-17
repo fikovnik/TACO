@@ -5,18 +5,19 @@ Bundle-SymbolicName: net.fikovnik.projects.taco.ui;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: org.eclipse.ui,
- org.eclipse.emf.ecore;bundle-version="2.7.0",
  org.eclipse.core.runtime;bundle-version="3.7.0",
  org.eclipse.acceleo.model;bundle-version="3.1.1",
  org.eclipse.acceleo.engine;bundle-version="3.1.1",
  org.eclipse.emf.common.ui;bundle-version="2.7.0",
  org.eclipse.core.resources;bundle-version="3.7.100",
- net.fikovnik.projects.taco.core;bundle-version="1.0.0",
- net.fikovnik.projects.taco.latex;bundle-version="1.0.0",
  org.eclipse.core.databinding;bundle-version="1.4.0",
  org.eclipse.jface.databinding;bundle-version="1.5.0",
- org.eclipse.core.databinding.beans;bundle-version="1.2.100"
-Bundle-Activator: net.fikovnik.projects.taco.ui.EcoreDocGenUIPlugin
+ org.eclipse.core.databinding.beans;bundle-version="1.2.100",
+ net.fikovnik.projects.taco.core;bundle-version="1.0.0",
+ org.eclipse.core.databinding.property,
+ org.eclipse.emf.databinding
+Bundle-Activator: net.fikovnik.projects.taco.ui.TACOUIPlugin
 Bundle-ActivationPolicy: lazy
 Export-Package: net.fikovnik.projects.taco.ui,
+ net.fikovnik.projects.taco.ui.util,
  net.fikovnik.projects.taco.ui.wizard

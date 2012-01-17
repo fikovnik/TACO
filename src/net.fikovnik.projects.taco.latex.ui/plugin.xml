@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.exportWizards">
+      <wizard
+            category="net.fikovnik.projects.taco.ui.wizard.EcoreDocumentationCategory"
+            class="net.fikovnik.projects.taco.latex.ui.internal.wizard.LatexEcoreDocumentationExportWizard"
+            icon="icons/default.gif"
+            id="net.fikovnik.projects.taco.latex.ui.internal.wizard.LatexEcoreDocumentationExportWizard"
+            name="LaTeX Ecore Documentation">
+      </wizard>
+   </extension>
+
+</plugin>

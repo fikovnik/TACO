@@ -1,42 +1,34 @@
 package net.fikovnik.projects.taco.ui.util;
 
-import java.io.File;
+import static org.eclipse.core.databinding.validation.ValidationStatus.error;
+import static org.eclipse.core.databinding.validation.ValidationStatus.ok;
 
-import net.fikovnik.projects.taco.core.util.PlatformUtil;
-import net.fikovnik.projects.taco.ui.EcoreDocGenUIPlugin;
+import java.io.File;
 
 import org.eclipse.core.databinding.conversion.IConverter;
 import org.eclipse.core.databinding.validation.IValidator;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 
 public final class DataBindingUtil {
 
-	private DataBindingUtil() {
+	public static class NotNullValidator implements IValidator {
+		private final String message;
 
-	}
-
-	private static final IValidator VALID_WRITABLE_DIR = new IValidator() {
+		public NotNullValidator(String message) {
+			this.message = message;
+		}
 
 		@Override
 		public IStatus validate(Object value) {
-			File f = (File) value;
-			if (!f.isDirectory()) {
-				return PlatformUtil.createError(
-						"Destination directory does not exist", null,
-						EcoreDocGenUIPlugin.PLUGIN_ID);
+			if (value == null) { 
+				return error(message);
+			} else {
+				return ok();
 			}
-			if (!f.canWrite()) {
-				return PlatformUtil.createError(
-						"Destination directoryt is not writable", null,
-						EcoreDocGenUIPlugin.PLUGIN_ID);
-			}
-			return Status.OK_STATUS;
 		}
-	};
-
-	private static final IConverter STRING_TO_FILE = new IConverter() {
-
+	}
+	
+	public static final class StringToFileConverter implements IConverter {
 		@Override
 		public Object getToType() {
 			return File.class;
@@ -51,28 +43,48 @@ public final class DataBindingUtil {
 		public Object convert(Object fromObject) {
 			return new File((String) fromObject);
 		}
-	};
+	}
 
-	public static IValidator getValidVritableDirectoryValidator() {
-		return VALID_WRITABLE_DIR;
+	public static final class WritableDirectoryValidator implements IValidator {
+		private final String messagePrefix;
+		
+		public WritableDirectoryValidator(String messagePrefix) {
+			this.messagePrefix = messagePrefix;
+		}
+
+		@Override
+		public IStatus validate(Object value) {
+			File f = (File) value;
+			if (f == null) {
+				return error(
+						messagePrefix+" Not directory set");				
+			} else if (!f.isDirectory()) {
+				return error(
+						messagePrefix+" Directory does not exist");
+			} else if (!f.canWrite()) {
+				return error(
+						messagePrefix+" Directory is not writable");
+			}
+			return ok();
+		}
+	}
+
+	private DataBindingUtil() {
+
+	}
+
+	private static final IConverter STRING_TO_FILE_CONVERTER = new StringToFileConverter();
+
+	public static IValidator createWritableDirectoryValidator(String messagePrefix) {
+		return new WritableDirectoryValidator(messagePrefix);
 	}
 	
 	public static IConverter getStringToFileConverter() {
-		return STRING_TO_FILE;
+		return STRING_TO_FILE_CONVERTER;
 	}
 
-	public static IValidator createNotEmptyValidator(final String message) {
-		return new IValidator() {
-			
-			@Override
-			public IStatus validate(Object value) {
-				if (value == null) { 
-					return PlatformUtil.createError(message, null, EcoreDocGenUIPlugin.PLUGIN_ID);
-				} else {
-					return Status.OK_STATUS;
-				}
-			}
-		};
+	public static IValidator createNotNullValidator(final String message) {
+		return new NotNullValidator(message);
 	}
 
 }

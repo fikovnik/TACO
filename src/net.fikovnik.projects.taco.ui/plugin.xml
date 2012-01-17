@@ -3,12 +3,18 @@
 <plugin>
    <extension
          point="org.eclipse.ui.exportWizards">
-      <wizard
-            class="net.fikovnik.projects.taco.ui.wizard.EcoreDocumentationExportWizard"
-            icon="icons/default.gif"
-            id="net.fikovnik.projects.taco.ui.wizard.EcoreDocumentationExportWizard"
+      <category
+            id="net.fikovnik.projects.taco.ui.wizard.EcoreDocumentationCategory"
             name="Ecore Documentation">
-      </wizard>
+      </category>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="net.fikovnik.projects.taco.ui.internal.preferences.DefaultPreferencePage"
+            id="net.fikovnik.projects.taco.ui.preferences.DefaultPreferences"
+            name="TACO Preferences">
+      </page>
    </extension>
 
 </plugin>

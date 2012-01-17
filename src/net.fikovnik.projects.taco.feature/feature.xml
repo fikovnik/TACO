@@ -37,14 +37,21 @@
          unpack="false"/>
 
    <plugin
-         id="net.fikovnik.projects.taco.latex"
+         id="net.fikovnik.projects.taco.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="net.fikovnik.projects.taco.ui"
+         id="net.fikovnik.projects.taco.latex.core"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="net.fikovnik.projects.taco.latex.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"

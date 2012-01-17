@@ -1,6 +1,6 @@
 package net.fikovnik.projects.taco.core.util;
 
-import net.fikovnik.projects.taco.core.EcoreDocGenCorePlugin;
+import net.fikovnik.projects.taco.core.TACOCorePlugin;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -43,7 +43,7 @@ public final class PlatformUtil {
 	private static IStatus createStatus(int severity, String message,
 			Throwable cause, String pluginId) {
 		// inject some plug-in id
-		pluginId = pluginId != null ? pluginId : EcoreDocGenCorePlugin.PLUGIN_ID;
+		pluginId = pluginId != null ? pluginId : TACOCorePlugin.PLUGIN_ID;
 
 		return new Status(severity, pluginId, message, cause);
 	}

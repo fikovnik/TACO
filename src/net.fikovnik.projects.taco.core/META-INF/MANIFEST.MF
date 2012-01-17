@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: TACO Core
-Bundle-SymbolicName: net.fikovnik.projects.taco.core
+Bundle-SymbolicName: net.fikovnik.projects.taco.core;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: org.eclipse.core.resources;bundle-version="3.7.100",

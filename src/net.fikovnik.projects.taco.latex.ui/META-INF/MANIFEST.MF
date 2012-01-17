@@ -1,0 +1,20 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: TACO LaTeX UI
+Bundle-SymbolicName: net.fikovnik.projects.taco.latex.ui;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: net.fikovnik.projects.taco.latex.ui.LatexUIPlugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.core.databinding,
+ org.eclipse.core.databinding.beans,
+ org.eclipse.core.databinding.observable,
+ org.eclipse.core.databinding.property,
+ org.eclipse.jface.databinding,
+ com.ibm.icu,
+ org.eclipse.core.resources;bundle-version="3.7.100",
+ net.fikovnik.projects.taco.ui;bundle-version="1.0.0",
+ net.fikovnik.projects.taco.latex.core;bundle-version="1.0.0",
+ net.fikovnik.projects.taco.core;bundle-version="1.0.0"
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
