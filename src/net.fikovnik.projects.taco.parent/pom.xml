@@ -12,6 +12,7 @@
 
 	<modules>
 		<module>../net.fikovnik.projects.taco.core</module>
+		<module>../net.fikovnik.projects.taco.core.test</module>
 		<module>../net.fikovnik.projects.taco.ui</module>
 		<module>../net.fikovnik.projects.taco.latex.core</module>
 		<module>../net.fikovnik.projects.taco.latex.ui</module>

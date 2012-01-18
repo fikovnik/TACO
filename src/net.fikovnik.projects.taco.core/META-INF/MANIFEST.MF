@@ -7,4 +7,8 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Require-Bundle: org.eclipse.core.resources;bundle-version="3.7.100",
  org.eclipse.core.runtime;bundle-version="3.7.0"
 Export-Package: net.fikovnik.projects.taco.core,
+ net.fikovnik.projects.taco.core.graphwiz,
+ net.fikovnik.projects.taco.core.internal.graphwiz,
  net.fikovnik.projects.taco.core.util
+Bundle-ActivationPolicy: lazy
+Bundle-Activator: net.fikovnik.projects.taco.core.TacoCorePlugin

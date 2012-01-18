@@ -1,7 +1,7 @@
 package net.fikovnik.projects.taco.ui.internal.preferences;
 
 import net.fikovnik.projects.taco.core.PreferenceConstants;
-import net.fikovnik.projects.taco.core.TACOCorePlugin;
+import net.fikovnik.projects.taco.core.TacoCorePlugin;
 
 import org.eclipse.core.runtime.preferences.ConfigurationScope;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
@@ -20,7 +20,7 @@ public class DefaultPreferencePage extends FieldEditorPreferencePage implements
 		super(FLAT);
 
 		setPreferenceStore(new ScopedPreferenceStore(
-				ConfigurationScope.INSTANCE, TACOCorePlugin.PLUGIN_ID));
+				ConfigurationScope.INSTANCE, TacoCorePlugin.PLUGIN_ID));
 		setDescription("TACO Default Configuration");
 	}
 

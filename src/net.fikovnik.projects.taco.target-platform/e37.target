@@ -9,5 +9,11 @@
 <unit id="org.eclipse.acceleo.sdk.feature.group" version="3.1.1.v20110914-0246"/>
 <repository location="http://download.eclipse.org/releases/indigo/"/>
 </location>
+<location includeAllPlatforms="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.junit" version="4.8.1.v4_8_1_v20100427-1100"/>
+<unit id="org.mockito" version="1.8.4.v201102171835"/>
+<unit id="org.apache.commons.io" version="2.0.1.v201105210651"/>
+<repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20110523182458/repository/"/>
+</location>
 </locations>
 </target>
