@@ -28,8 +28,8 @@ THE SOFTWARE.
  */]
 [module modelReference('http://www.eclipse.org/emf/2002/Ecore')/]
 
-[import net::fikovnik::projects::taco::latex::core::common::uml /]
-[import net::fikovnik::projects::taco::latex::core::files::dot /]
+[import net::fikovnik::projects::taco::core::gen::common::uml /]
+[import net::fikovnik::projects::taco::core::gen::files::classDiagram /]
 
 [query public annotationDetails(element : EModelElement, source : String, detail : String) : Set(String) = 
 	element.eAnnotations

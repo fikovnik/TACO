@@ -29,9 +29,9 @@ THE SOFTWARE.
  * 
  * @author Filip Krikava
  */]
-[module dot('http://www.eclipse.org/emf/2002/Ecore')]
+[module classDiagram('http://www.eclipse.org/emf/2002/Ecore')]
 
-[import net::fikovnik::projects::taco::latex::core::common::uml /]
+[import net::fikovnik::projects::taco::core::gen::common::uml /]
 
 [query private getAllDependingClasses(class : EClass, superTypes : Boolean, referenceTypes : Boolean) : Set(EClass) =
 	if (superTypes and referenceTypes) then
