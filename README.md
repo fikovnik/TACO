@@ -3,7 +3,9 @@
 TACO is an Eclipse plugin that contributes a set of actions to automatically generate documentation for ecore models.
 
 _The inspiration for this name was following painting of EMF (Emotional Mexican
-Food)._
+Food) by SongofRedFire._
+
+<a href="http://songofredfire.deviantart.com/art/EMF-The-Blue-Taco-194387520"><img align="center" href="http://fc03.deviantart.net/fs71/f/2011/021/e/b/emf__the_blue_taco_by_songofredfire-d37qedc.png" /></a>
 
 ## Requirements
 
