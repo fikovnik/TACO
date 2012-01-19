@@ -2,8 +2,10 @@ package net.fikovnik.projects.taco.latex.ui.internal.wizard;
 
 
 import net.fikovnik.projects.taco.core.TacoCorePlugin;
+import net.fikovnik.projects.taco.core.graphwiz.IGraphwizService;
 import net.fikovnik.projects.taco.latex.core.LatexExportProperties;
 import net.fikovnik.projects.taco.latex.core.LatexGenerator;
+import net.fikovnik.projects.taco.ui.GraphwizDiagnostics;
 import net.fikovnik.projects.taco.ui.wizard.AbstractEcoreDocumentationExportWizard;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -35,8 +37,13 @@ public final class LatexEcoreDocumentationExportWizard extends
 	
 	@Override
 	protected void doGenerate(IProgressMonitor monitor) throws Exception {
+		IGraphwizService graphwizService = TacoCorePlugin.getDefault().getGraphwizService();
+		if (!GraphwizDiagnostics.diagnoze(getShell(), graphwizService)) {
+			graphwizService = null;
+		}
+
 		// TODO: IoC
-		LatexGenerator generator = new LatexGenerator(model.getSourceEcoreFile(), model.getTargetOutput(), properties, TacoCorePlugin.getDefault().getGraphwizService());
+		LatexGenerator generator = new LatexGenerator(model.getSourceEcoreFile(), model.getTargetOutput(), properties, graphwizService);
 		generator.generate(monitor);
 	}
 	

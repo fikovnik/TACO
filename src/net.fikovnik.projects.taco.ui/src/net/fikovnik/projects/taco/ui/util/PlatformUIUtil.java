@@ -119,6 +119,10 @@ public final class PlatformUIUtil {
 	public static void handleStatusNoLog(IStatus status) {
 		StatusManager.getManager().handle(status, StatusManager.BLOCK);
 	}
+	
+	public static void logStatus(IStatus status) {
+		StatusManager.getManager().handle(status, StatusManager.LOG);
+	}
 
 	/**
 	 * Type safe method to get a service using given service locator. Will never

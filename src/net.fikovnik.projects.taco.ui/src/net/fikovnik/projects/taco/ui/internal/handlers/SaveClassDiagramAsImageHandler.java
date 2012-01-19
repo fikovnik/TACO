@@ -4,7 +4,9 @@ import java.io.File;
 
 import net.fikovnik.projects.taco.core.TacoCorePlugin;
 import net.fikovnik.projects.taco.core.graphwiz.IGraphwiz.GraphwizOutputType;
+import net.fikovnik.projects.taco.core.graphwiz.IGraphwizService;
 import net.fikovnik.projects.taco.core.jobs.GenerateClassDiagramJob;
+import net.fikovnik.projects.taco.ui.GraphwizDiagnostics;
 import net.fikovnik.projects.taco.ui.TacoUIPlugin;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -36,12 +38,17 @@ public final class SaveClassDiagramAsImageHandler extends AbstractHandler
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		IStructuredSelection selection = (IStructuredSelection) HandlerUtil
-				.getActiveMenuSelectionChecked(event);
+				.getActiveMenuSelection(event);
 
-		if (selection.isEmpty()) {
+		if (selection == null || selection.isEmpty()) {
 			return null;
 		}
 
+		IGraphwizService graphwizService = TacoCorePlugin.getDefault().getGraphwizService();
+		if (!GraphwizDiagnostics.diagnoze(HandlerUtil.getActiveShellChecked(event), graphwizService)) {
+			return null;
+		}
+		
 		EPackage pkg = null;
 		
 		Object[] selectedItems = selection.toArray();
@@ -87,7 +94,7 @@ public final class SaveClassDiagramAsImageHandler extends AbstractHandler
 		GraphwizOutputType type = types[fd.getFilterIndex()];
 
 		GenerateClassDiagramJob job = new GenerateClassDiagramJob(pkg, target, type,
-				TacoCorePlugin.getDefault().getGraphwizService());
+				graphwizService);
 
 		job.addJobChangeListener(new JobChangeAdapter() {
 			@Override

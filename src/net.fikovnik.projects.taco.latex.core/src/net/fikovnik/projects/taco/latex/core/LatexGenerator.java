@@ -20,7 +20,8 @@ import org.eclipse.emf.common.util.URI;
 
 public final class LatexGenerator {
 
-	// TODO: extrcat
+	// TODO: extract
+	// TODOL propage to mtl 
 	private static final String DOT_OUTPUT_FOLDER_NAME = "dot";
 	private static final String PDF_OUTPUT_FOLDER_NAME = "figures";
 	
@@ -47,16 +48,25 @@ public final class LatexGenerator {
 		
 		URI modelURI = URI.createPlatformResourceURI(ecoreFile.getFullPath().toString(), true);
 		List<Object> arguments = Collections.<Object> emptyList();
-
-		IGraphwizBuilder builder = graphwizService.createBuilder(GraphwizOutputType.PDF);
-		builder.registerExistingFiles(dotFolder, mainMonitor.newChild(10));
+		
+		IGraphwizBuilder builder = null;
+		if (graphwizService != null) {
+			builder = graphwizService.createBuilder(GraphwizOutputType.PDF);
+			builder.registerExistingFiles(dotFolder, mainMonitor.newChild(10));
+		}
 		
 		Main delegate = new Main(modelURI, targetFolder, arguments);
 		delegate.getProperties().add(serializeProperty(serialize(properties)).getAbsolutePath());
 		
-		delegate.doGenerate(BasicMonitor.toMonitor(mainMonitor.newChild(50)));
+		if (builder != null) {
+			delegate.doGenerate(BasicMonitor.toMonitor(mainMonitor.newChild(50)));
+		} else {
+			delegate.doGenerate(BasicMonitor.toMonitor(mainMonitor.newChild(110)));			
+		}
 		
-		builder.regenerate(figuresFolder, true, mainMonitor.newChild(50));
+		if (builder != null) {
+			builder.regenerate(figuresFolder, true, mainMonitor.newChild(50));
+		}
 		mainMonitor.done();
 	}
 }

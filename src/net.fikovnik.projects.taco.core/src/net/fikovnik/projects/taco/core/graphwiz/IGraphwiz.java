@@ -1,6 +1,7 @@
 package net.fikovnik.projects.taco.core.graphwiz;
 
 import java.io.File;
+import java.io.IOException;
 
 
 public interface IGraphwiz {
@@ -43,5 +44,7 @@ public interface IGraphwiz {
 	public static final String DOT_FILE_EXT = "dot";
 	
 	public void generate(File in, File out, GraphwizOutputType type) throws GraphwizException;
+
+	public int[] getVersion() throws IOException, InterruptedException, GraphwizException;
 
 }
