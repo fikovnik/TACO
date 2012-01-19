@@ -10,7 +10,13 @@
  *******************************************************************************/
 package net.fikovnik.projects.taco.latex;
 
+import java.io.File;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.StringTokenizer;
+
 import org.eclipse.acceleo.parser.compiler.AbstractAcceleoCompiler;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.BasicMonitor;
 import org.eclipse.emf.common.util.Monitor;
 
@@ -43,6 +49,39 @@ public class AcceleoCompiler extends AbstractAcceleoCompiler {
         }
         acceleoCompiler.doCompile(new BasicMonitor());
     }
+    
+    @Override
+    public void setDependencies(String allDependencies) {
+		dependencies.clear();
+		StringTokenizer st = new StringTokenizer(allDependencies, ";"); //$NON-NLS-1$
+		while (st.hasMoreTokens()) {
+			String path = st.nextToken().trim();
+			if (path.length() > 0) {
+				File parent = new Path(path).removeLastSegments(1).toFile();
+				if (parent != null && parent.exists() && parent.isDirectory()) {
+					String segmentID = new Path(path).lastSegment();
+					File[] candidates = parent.listFiles();
+					Arrays.sort(candidates, new Comparator<File>() {
+						public int compare(File o1, File o2) {
+							return -o1.getName().compareTo(o2.getName());
+						}
+					});
+					File bestRequiredFolder = null;
+					for (File candidate : candidates) {
+						if (candidate.isDirectory() && candidate.getName() != null
+								&& candidate.getName().equals(segmentID)) {
+							bestRequiredFolder = candidate;
+							break;
+						}
+					}
+					if (bestRequiredFolder != null && !dependencies.contains(bestRequiredFolder)) {
+						dependencies.add(bestRequiredFolder);
+						dependenciesIDs.add(segmentID);
+					}
+				}
+			}
+		}
+	}
     
     /**
      * Launches the compilation of the mtl files in the generator.
