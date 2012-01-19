@@ -8,6 +8,7 @@ import java.util.List;
 import net.fikovnik.projects.taco.core.gen.main.ClassDiagram;
 import net.fikovnik.projects.taco.core.graphwiz.GraphwizException;
 import net.fikovnik.projects.taco.core.graphwiz.IGraphwiz;
+import net.fikovnik.projects.taco.core.graphwiz.IGraphwiz.GraphwizOutputType;
 import net.fikovnik.projects.taco.core.graphwiz.IGraphwizService;
 import net.fikovnik.projects.taco.core.util.PlatformUtil;
 
@@ -24,14 +25,17 @@ public final class GenerateClassDiagramJob extends Job {
 	private static final String OUTPUT_FILE_NAME = "diagram.dot";
 	private final EPackage pkg;
 	private final File target;
+	private final GraphwizOutputType type;
 	private IGraphwizService graphwizService;
 
-	public GenerateClassDiagramJob(EPackage pkg, File target,
+	public GenerateClassDiagramJob(EPackage pkg, File target, GraphwizOutputType type,
 			IGraphwizService graphwizService) {
 		super("Generate Class diagram");
 
+		// TODO: assert
 		this.pkg = pkg;
 		this.target = target;
+		this.type = type;
 		this.graphwizService = graphwizService;
 
 		setPriority(Job.LONG);
@@ -68,7 +72,7 @@ public final class GenerateClassDiagramJob extends Job {
 		IGraphwiz graphwiz = graphwizService.getGraphwiz();
 		File in = new File(tmpFolder, OUTPUT_FILE_NAME);
 
-		graphwiz.generate(in, target);
+		graphwiz.generate(in, target, type);
 
 		FileUtils.deleteDirectory(tmpFolder);
 		

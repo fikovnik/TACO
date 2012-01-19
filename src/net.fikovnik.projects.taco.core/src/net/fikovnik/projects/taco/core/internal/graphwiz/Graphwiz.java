@@ -64,13 +64,13 @@ public final class Graphwiz implements IGraphwiz {
 	 * (java.io.File, java.io.File)
 	 */
 	@Override
-	public void generate(File in, File out) throws GraphwizException {
+	public void generate(File in, File out, GraphwizOutputType type) throws GraphwizException {
 		Runtime r = Runtime.getRuntime();
 		StreamGobbler stderr = null;
 		StreamGobbler stdout = null;
 		
 		try {
-			Process p = r.exec(String.format("%s -T pdf %s -o %s", dotPath,
+			Process p = r.exec(String.format("%s -T %s %s -o %s", dotPath, type.getFileExtension(),
 					in.getAbsolutePath(), out.getAbsolutePath()));
 			
 			stderr = new StreamGobbler(p.getErrorStream());

@@ -2,6 +2,7 @@ package net.fikovnik.projects.taco.core.internal.graphwiz;
 
 import net.fikovnik.projects.taco.core.PreferenceConstants;
 import net.fikovnik.projects.taco.core.graphwiz.IGraphwiz;
+import net.fikovnik.projects.taco.core.graphwiz.IGraphwiz.GraphwizOutputType;
 import net.fikovnik.projects.taco.core.graphwiz.IGraphwizBuilder;
 import net.fikovnik.projects.taco.core.graphwiz.IGraphwizService;
 
@@ -21,8 +22,8 @@ public final class GraphwizService implements IGraphwizService {
 	}
 
 	@Override
-	public IGraphwizBuilder createBuilder() {
-		return new GraphwizBuilder(getGraphwiz());
+	public IGraphwizBuilder createBuilder(GraphwizOutputType type) {
+		return new GraphwizBuilder(getGraphwiz(), type);
 	}
 	
 }

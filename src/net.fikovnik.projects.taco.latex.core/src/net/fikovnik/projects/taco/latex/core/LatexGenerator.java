@@ -7,6 +7,7 @@ import java.io.File;
 import java.util.Collections;
 import java.util.List;
 
+import net.fikovnik.projects.taco.core.graphwiz.IGraphwiz.GraphwizOutputType;
 import net.fikovnik.projects.taco.core.graphwiz.IGraphwizBuilder;
 import net.fikovnik.projects.taco.core.graphwiz.IGraphwizService;
 import net.fikovnik.projects.taco.latex.core.main.Main;
@@ -47,7 +48,7 @@ public final class LatexGenerator {
 		URI modelURI = URI.createPlatformResourceURI(ecoreFile.getFullPath().toString(), true);
 		List<Object> arguments = Collections.<Object> emptyList();
 
-		IGraphwizBuilder builder = graphwizService.createBuilder();
+		IGraphwizBuilder builder = graphwizService.createBuilder(GraphwizOutputType.PDF);
 		builder.registerExistingFiles(dotFolder, mainMonitor.newChild(10));
 		
 		Main delegate = new Main(modelURI, targetFolder, arguments);

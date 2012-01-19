@@ -5,9 +5,43 @@ import java.io.File;
 
 public interface IGraphwiz {
 
-	public static final String DOT_FILE_EXT = "dot";
-	public static final String PDF_FILE_EXT = "pdf";
+	public interface IGraphwizOutputType {
+		public String getFileExtension();
+		public String getName();
+	}
+	
+	public enum GraphwizOutputType implements IGraphwizOutputType {
+		PDF("PDF", "pdf", "PDF (Portable Document Format)"), PNG("PNG", "png","PNG (Portable Network Graphics)");
+		
+		private final String abbrv;
+		private final String fileExtension;
+		private final String name;
+		
+		GraphwizOutputType(String abbrv, String fileExtension, String name) {
+			// TODO: assert
+			this.abbrv = abbrv;
+			this.fileExtension = fileExtension;
+			this.name = name;
+		}
+		
+		@Override
+		public String getFileExtension() {
+			return fileExtension;
+		}
+		
+		@Override
+		public String toString() {
+			return abbrv;
+		}
 
-	public void generate(File in, File out) throws GraphwizException;
+		@Override
+		public String getName() {
+			return name;
+		}
+	}
+
+	public static final String DOT_FILE_EXT = "dot";
+	
+	public void generate(File in, File out, GraphwizOutputType type) throws GraphwizException;
 
 }

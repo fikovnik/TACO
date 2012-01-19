@@ -3,7 +3,7 @@ package net.fikovnik.projects.taco.ui.internal.handlers;
 import java.io.File;
 
 import net.fikovnik.projects.taco.core.TacoCorePlugin;
-import net.fikovnik.projects.taco.core.graphwiz.IGraphwiz;
+import net.fikovnik.projects.taco.core.graphwiz.IGraphwiz.GraphwizOutputType;
 import net.fikovnik.projects.taco.core.jobs.GenerateClassDiagramJob;
 import net.fikovnik.projects.taco.ui.TacoUIPlugin;
 
@@ -31,7 +31,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
 public final class SaveClassDiagramAsImageHandler extends AbstractHandler
 		implements IHandler {
 
-	protected static final String REVEL_RESULT_TOGGLE = "SaveClassDiagramAsImage.revealResult";
+	private static final String REVEL_RESULT_TOGGLE = "SaveClassDiagramAsImage.revealResult";
 
 	@Override
 	public Object execute(ExecutionEvent event) throws ExecutionException {
@@ -57,17 +57,32 @@ public final class SaveClassDiagramAsImageHandler extends AbstractHandler
 			}
 		}
 		
+		GraphwizOutputType[] types = GraphwizOutputType.values();
+		String[] typeNames = new String[types.length];
+		String[] typeExtensions = new String[types.length];
+		for (int i = 0; i < types.length; i++) {
+			typeNames[i] = types[i].getName();
+			typeExtensions[i] = "*." + types[i].getFileExtension();
+		}
+		
+		
 		FileDialog fd = new FileDialog(
 				HandlerUtil.getActiveShellChecked(event), SWT.SAVE);
 		fd.setOverwrite(true);
 		fd.setText("Save Class Diagram As");
-		fd.setFileName("ClassDiagram." + IGraphwiz.PDF_FILE_EXT);
-		fd.setFilterExtensions(new String[] { "*." + IGraphwiz.PDF_FILE_EXT });
+		fd.setFileName("ClassDiagram");
+		fd.setFilterExtensions(typeExtensions);
+		fd.setFilterNames(typeNames);
 
 		String fileName = fd.open();
+		if (fileName == null) {
+			return null;
+		}
+		
 		File target = new File(fileName);
+		GraphwizOutputType type = types[fd.getFilterIndex()];
 
-		GenerateClassDiagramJob job = new GenerateClassDiagramJob(pkg, target,
+		GenerateClassDiagramJob job = new GenerateClassDiagramJob(pkg, target, type,
 				TacoCorePlugin.getDefault().getGraphwizService());
 
 		job.addJobChangeListener(new JobChangeAdapter() {

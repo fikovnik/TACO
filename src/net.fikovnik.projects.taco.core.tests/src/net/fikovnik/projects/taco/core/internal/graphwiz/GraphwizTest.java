@@ -3,6 +3,8 @@ package net.fikovnik.projects.taco.core.internal.graphwiz;
 import java.io.File;
 import java.io.FileInputStream;
 
+import net.fikovnik.projects.taco.core.graphwiz.IGraphwiz.GraphwizOutputType;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
@@ -22,7 +24,7 @@ public final class GraphwizTest {
 		
 		FileUtils.copyURLToFile(getClass().getResource("sample.dot"), tmpIn);
 				
-		graphwiz.generate(tmpIn, tmpOut);
+		graphwiz.generate(tmpIn, tmpOut, GraphwizOutputType.PDF);
 		
 		IOUtils.contentEquals(new FileInputStream(tmpOut), getClass().getResourceAsStream("sample.dot.pdf"));
 	}

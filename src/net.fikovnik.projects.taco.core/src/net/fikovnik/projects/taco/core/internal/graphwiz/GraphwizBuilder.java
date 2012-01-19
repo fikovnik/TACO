@@ -8,6 +8,7 @@ import java.util.Map;
 
 import net.fikovnik.projects.taco.core.graphwiz.GraphwizException;
 import net.fikovnik.projects.taco.core.graphwiz.IGraphwiz;
+import net.fikovnik.projects.taco.core.graphwiz.IGraphwiz.GraphwizOutputType;
 import net.fikovnik.projects.taco.core.graphwiz.IGraphwizBuilder;
 
 import org.apache.commons.io.FileUtils;
@@ -17,12 +18,15 @@ import org.eclipse.core.runtime.IProgressMonitor;
 public final class GraphwizBuilder implements IGraphwizBuilder {
 
 	private final IGraphwiz graphwiz;
+	private final GraphwizOutputType type;
+
 	private Map<File, Long> registeredFiles = new HashMap<File, Long>();
 	private File sourceFolder;
 
-	public GraphwizBuilder(IGraphwiz graphwiz) {
+	public GraphwizBuilder(IGraphwiz graphwiz, GraphwizOutputType type) {
 		// TODO: assert
 		this.graphwiz = graphwiz;
+		this.type = type;
 	}
 
 	@Override
@@ -51,11 +55,11 @@ public final class GraphwizBuilder implements IGraphwizBuilder {
 			
 			try {
 				String name = FilenameUtils.removeExtension(source.getName());
-				String targetFileName = name + "." + IGraphwiz.PDF_FILE_EXT;
+				String targetFileName = name + "." + type.getFileExtension();
 				File target = new File(targetFolder, targetFileName);
 
 				monitor.subTask("Generating: " + targetFileName);
-				graphwiz.generate(source, target);
+				graphwiz.generate(source, target, type);
 				monitor.worked(1);
 			} catch (GraphwizException e) {
 				if (!ignoreFailures) {

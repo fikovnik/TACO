@@ -23,22 +23,19 @@
             locationURI="popup:org.eclipse.ui.popup.any?after=additions">
          <menu
                label="TACO">
-            <menu
+            <command
+                  commandId="net.fikovnik.projects.taco.ui.command.saveClassDiagramAsImage"
                   icon="icons/elcl16/save.png"
-                  label="Save Class Diagram">
-               <command
-                     commandId="net.fikovnik.projects.taco.ui.command.saveClassDiagramAsPDF"
-                     icon="icons/elcl16/pdf.png"
-                     label="as PDF"
-                     style="push">
-               </command>
+                  label="Save Class Diagram as Image"
+                  style="push"
+                  tooltip="Saves selected elements as class diagram Image">
                <visibleWhen
                      checkEnabled="false">
                   <reference
                         definitionId="net.fikovnik.projects.taco.ui.ecoreElementsSelected">
                   </reference>
                </visibleWhen>
-            </menu>
+            </command>
          </menu>
       </menuContribution>
    </extension>
@@ -51,8 +48,8 @@
       <command
             categoryId="net.fikovnik.projects.taco.ui.commands"
             defaultHandler="net.fikovnik.projects.taco.ui.internal.handlers.SaveClassDiagramAsImageHandler"
-            id="net.fikovnik.projects.taco.ui.command.saveClassDiagramAsPDF"
-            name="Save Class Diagram as PDF">
+            id="net.fikovnik.projects.taco.ui.command.saveClassDiagramAsImage"
+            name="Save Class Diagram">
       </command>
    </extension>
    <extension
