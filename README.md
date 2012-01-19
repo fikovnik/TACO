@@ -5,6 +5,10 @@ TACO is an Eclipse plugin that contributes a set of actions to automatically gen
 _The inspiration for this name was following painting of EMF (Emotional Mexican
 Food)._
 
+## Requirements
+
+In order to be able to generate class diagrams, [Graphwiz](http://www.graphviz.org/) >= 2 has to be installed.
+
 ## Installation
 
 * Update site: `http://fikovnik.net/www/projects/TACO/update-site/`
@@ -22,7 +26,7 @@ The resulting update site will be in the `src/net.fikovnik.projects.taco.update-
 Another possibility is to use Eclipse using the [M2E
 plugin](http://eclipse.org/m2e/). In the `net.fikovnik.projects.taco.ui` is a
 custom launch configuration that can help to get started (for OSX only). Before
-playing with the source in Eclipse, it is good to set a target platfrom to
+playing with the source in Eclipse, it is good to set a target platform to
 `e37.target` that is located in the
 `net.fikovnik.projects.taco.target-platform`.
 
