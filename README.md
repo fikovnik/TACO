@@ -13,7 +13,7 @@ In order to be able to generate class diagrams, [Graphwiz](http://www.graphviz.o
 
 ## Installation
 
-* Update site: `http://fikovnik.net/www/projects/TACO/update-site/`
+* Update site: `http://fikovnik.net/projects/TACO/update-site/`
 
 ## Building from source
 
