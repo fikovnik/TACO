@@ -7,7 +7,7 @@ import static net.fikovnik.projects.taco.ui.util.DataBindingUtil.getStringToFile
 import java.util.ArrayList;
 import java.util.List;
 
-import net.fikovnik.projects.taco.ui.TACOUIPlugin;
+import net.fikovnik.projects.taco.ui.TacoUIPlugin;
 import net.fikovnik.projects.taco.ui.util.PlatformUIUtil;
 import net.fikovnik.projects.taco.ui.wizard.AbstractEcoreDocumentationExportWizard.ExportModel;
 
@@ -171,7 +171,7 @@ public final class SelectModelFileWizardPage extends WizardPage {
 				}
 			});
 		} catch (CoreException e) {
-			PlatformUIUtil.handleError(e, TACOUIPlugin.PLUGIN_ID);
+			PlatformUIUtil.handleError(e, TacoUIPlugin.PLUGIN_ID);
 		}
 
 		return ecoreFiles.toArray(new IResource[] {});

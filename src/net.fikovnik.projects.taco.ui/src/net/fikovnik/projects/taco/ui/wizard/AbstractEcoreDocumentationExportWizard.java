@@ -4,7 +4,7 @@ import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 
 import net.fikovnik.projects.taco.core.AbstractBean;
-import net.fikovnik.projects.taco.ui.TACOUIPlugin;
+import net.fikovnik.projects.taco.ui.TacoUIPlugin;
 import net.fikovnik.projects.taco.ui.util.PlatformUIUtil;
 
 import org.eclipse.core.resources.IFile;
@@ -76,7 +76,7 @@ public abstract class AbstractEcoreDocumentationExportWizard extends Wizard
 	}
 
 	private void initDialogSettings() {
-		IDialogSettings settings = TACOUIPlugin.getDefault()
+		IDialogSettings settings = TacoUIPlugin.getDefault()
 				.getDialogSettings();
 		IDialogSettings section = settings.getSection(DIALOG_SETTINGS_KEY);
 		if (section == null) {
@@ -114,7 +114,7 @@ public abstract class AbstractEcoreDocumentationExportWizard extends Wizard
 							getShell(),
 							"Ecore Documentation Generated",
 							"Ecore documentation has been generated. Do you want to reveal it?",
-							null, false, TACOUIPlugin.getDefault()
+							null, false, TacoUIPlugin.getDefault()
 									.getPreferenceStore(), REVEL_DOC_TOGGLE);
 			if (dialog.getReturnCode() == IDialogConstants.YES_ID) {
 				Program.launch(model.getTargetOutput().getAbsolutePath());
@@ -124,7 +124,7 @@ public abstract class AbstractEcoreDocumentationExportWizard extends Wizard
 		} catch (InvocationTargetException e) {
 			PlatformUIUtil.handleInvocationException(
 					"Generating Ecore documentation", e,
-					TACOUIPlugin.PLUGIN_ID);
+					TacoUIPlugin.PLUGIN_ID);
 			return false;
 		} catch (InterruptedException e) {
 			return false;

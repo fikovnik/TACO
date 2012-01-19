@@ -29,7 +29,7 @@ THE SOFTWARE.
 [module modelReference('http://www.eclipse.org/emf/2002/Ecore')/]
 
 [import net::fikovnik::projects::taco::core::gen::common::uml /]
-[import net::fikovnik::projects::taco::core::gen::files::classDiagram /]
+[import net::fikovnik::projects::taco::core::gen::files::graphwiz /]
 
 [query public annotationDetails(element : EModelElement, source : String, detail : String) : Set(String) = 
 	element.eAnnotations
@@ -74,7 +74,7 @@ THE SOFTWARE.
 }]
 [file (src_fname, false, 'UTF-8')]
 [genPrologue() /]
-[pkg.genPackage() /]
+[pkg.genPackage(false) /]
 [genEpilogue() /]
 [/file]
 

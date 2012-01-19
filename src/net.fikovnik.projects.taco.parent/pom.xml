@@ -12,7 +12,7 @@
 
 	<modules>
 		<module>../net.fikovnik.projects.taco.core</module>
-		<module>../net.fikovnik.projects.taco.core.test</module>
+		<module>../net.fikovnik.projects.taco.core.tests</module>
 		<module>../net.fikovnik.projects.taco.ui</module>
 		<module>../net.fikovnik.projects.taco.latex.core</module>
 		<module>../net.fikovnik.projects.taco.latex.ui</module>
@@ -98,6 +98,25 @@
 										</versionRange>
 										<goals>
 											<goal>plugin-source</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.codehaus.mojo
+										</groupId>
+										<artifactId>
+											exec-maven-plugin
+										</artifactId>
+										<versionRange>
+											[1.1.1,)
+										</versionRange>
+										<goals>
+											<goal>java</goal>
 										</goals>
 									</pluginExecutionFilter>
 									<action>

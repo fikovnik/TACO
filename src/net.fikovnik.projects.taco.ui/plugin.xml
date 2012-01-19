@@ -16,5 +16,75 @@
             name="TACO Preferences">
       </page>
    </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="true"
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+         <menu
+               label="TACO">
+            <menu
+                  icon="icons/elcl16/save.png"
+                  label="Save Class Diagram">
+               <command
+                     commandId="net.fikovnik.projects.taco.ui.command.saveClassDiagramAsPDF"
+                     icon="icons/elcl16/pdf.png"
+                     label="as PDF"
+                     style="push">
+               </command>
+               <visibleWhen
+                     checkEnabled="false">
+                  <reference
+                        definitionId="net.fikovnik.projects.taco.ui.ecoreElementsSelected">
+                  </reference>
+               </visibleWhen>
+            </menu>
+         </menu>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            id="net.fikovnik.projects.taco.ui.commands"
+            name="TACO commands">
+      </category>
+      <command
+            categoryId="net.fikovnik.projects.taco.ui.commands"
+            defaultHandler="net.fikovnik.projects.taco.ui.internal.handlers.SaveClassDiagramAsImageHandler"
+            id="net.fikovnik.projects.taco.ui.command.saveClassDiagramAsPDF"
+            name="Save Class Diagram as PDF">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.core.expressions.definitions">
+      <definition
+            id="net.fikovnik.projects.taco.ui.ecoreElementsSelected">
+         <or>
+            <with
+                  variable="activeMenuSelection">
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <instanceof
+                        value="org.eclipse.emf.ecore.EPackage">
+                  </instanceof>
+               </iterate>
+               <count
+                     value="1">
+               </count>
+            </with>
+            <with
+                  variable="activeMenuSelection">
+               <iterate
+                     ifEmpty="false"
+                     operator="or">
+                  <instanceof
+                        value="org.eclipse.emf.ecore.EClass">
+                  </instanceof>
+               </iterate>
+            </with>
+         </or>
+      </definition>
+   </extension>
 
 </plugin>

@@ -1,5 +1,8 @@
 package net.fikovnik.projects.taco.core.util;
 
+import java.io.File;
+import java.io.IOException;
+
 import net.fikovnik.projects.taco.core.TacoCorePlugin;
 
 import org.eclipse.core.runtime.IStatus;
@@ -46,6 +49,21 @@ public final class PlatformUtil {
 		pluginId = pluginId != null ? pluginId : TacoCorePlugin.PLUGIN_ID;
 
 		return new Status(severity, pluginId, message, cause);
+	}
+
+	public static File createTempDir() throws IOException {
+		File tmpFolder = File.createTempFile("TACO", "");
+	
+		if (!(tmpFolder.delete())) {
+			throw new IOException("Could not delete temp file: "
+					+ tmpFolder.getAbsolutePath());
+		}
+	
+		if (!(tmpFolder.mkdir())) {
+			throw new IOException("Could not create temp directory: "
+					+ tmpFolder.getAbsolutePath());
+		}
+		return tmpFolder;
 	}
 
 }

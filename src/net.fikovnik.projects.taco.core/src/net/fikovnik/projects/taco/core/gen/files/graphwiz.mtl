@@ -29,7 +29,7 @@ THE SOFTWARE.
  * 
  * @author Filip Krikava
  */]
-[module classDiagram('http://www.eclipse.org/emf/2002/Ecore')]
+[module graphwiz('http://www.eclipse.org/emf/2002/Ecore')]
 
 [import net::fikovnik::projects::taco::core::gen::common::uml /]
 
@@ -47,8 +47,24 @@ THE SOFTWARE.
 	endif
  /]
 
+[query private getSuperPackages(pkg : EPackage) : Sequence(EPackage) =
+	if (pkg.eSuperPackage->notEmpty()) then
+		getSuperPackages(pkg.eSuperPackage)->union(Sequence(EPackage){pkg})
+	else
+		Sequence(EPackage){pkg}
+	endif
+/]
+
+[template private fqcn(pkg : EPackage) post (trim())]
+[for (p : EPackage | getSuperPackages(pkg)) separator ('__')][p.name/][/for]
+[/template]
+
+[template private fqcn(classifier : EClassifier) post (trim())]
+[if (classifier.ePackage->notEmpty())][fqcn(classifier.ePackage)/]__[/if][classifier.name/]
+[/template]
+
 [template private renderReference(reference : EReference, class : EClass)]
-[class.name/]:port -> [reference.eReferenceType.name/]:port ['['/] 
+[fqcn(class)/]:port -> [fqcn(reference.eReferenceType)/]:port ['['/] 
   arrowhead = "vee" 
   arrowtail = [if (reference.containment)]"diamond"[else]"none"[/if]
   taillabel = <<TABLE border="0" cellborder="0" cellspacing="0" cellpadding="0"><TR><TD></TD></TR></TABLE>>
@@ -62,7 +78,7 @@ THE SOFTWARE.
 [/template]
 
 [template private renderGeneralization(superType : EClass, subType : EClass)]
-[superType.name/]:port -> [subType.name/]:port ['['/] 
+[fqcn(superType)/]:port -> [fqcn(subType)/]:port ['['/] 
   arrowhead = "none"
   arrowtail = "onormal"
   minlen = "1.5"
@@ -78,7 +94,7 @@ THE SOFTWARE.
  * Generates only the class node, no references, no generalizations. 
  */]
 [template private renderClass(class : EClass, attributes : Boolean, color : String)]
-[class.name/] ['['/] label = <
+[fqcn(class)/] ['['/] label = <
 <TABLE bgcolor="[color/]" border="0" cellspacing="0" cellpadding="0" cellborder="0" port="port">
 <TR><TD>
 <TABLE border="1" cellborder="0" cellpadding="3" cellspacing="0" align="left">
@@ -114,11 +130,19 @@ THE SOFTWARE.
 
 [/template]
 
+[template public genClass(class : EClass)]
+
+[genClass(class, true, true, true, 'white')/]
+
+[/template]
+
 [template public genPackage(pkg : EPackage)]
+
 [comment]
 FIXME: this does not work from whatever reason
 [pkg.eAllContents(EClass).genClass(true, false, true, 'white') /]
 [/comment]
+
 [for (class : EClass | pkg.eClassifiers->select(c | c.oclIsKindOf(EClass))->collect(c | c.oclAsType(EClass)))]
 [class.genClass(true, true, true, 'white')/]
 [/for]
