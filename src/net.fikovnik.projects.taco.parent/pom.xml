@@ -18,6 +18,7 @@
 		<module>../net.fikovnik.projects.taco.latex.ui</module>
 		<module>../net.fikovnik.projects.taco.target-platform</module>
 		<module>../net.fikovnik.projects.taco.feature</module>
+		<module>../net.fikovnik.projects.taco.latex.feature</module>
 		<module>../net.fikovnik.projects.taco.update-site</module>
 	</modules>
 

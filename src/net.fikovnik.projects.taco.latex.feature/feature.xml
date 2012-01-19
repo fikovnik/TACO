@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="net.fikovnik.projects.taco.feature"
-      label="TACO Feature"
+      id="net.fikovnik.projects.taco.latex.feature"
+      label="TACO LaTeX Feature"
       version="1.0.0.qualifier"
       os="linux,macosx,win32"
       ws="cocoa,gtk,win32"
       arch="x86,x86_64">
 
    <description url="http://github.com/fikovnik/TACO">
-      Documentation Generator for Ecore Models
+      LaTeX documentation generator
    </description>
 
    <copyright url="http://www.eclipse.org/legal/epl-v10.html">
@@ -24,20 +24,18 @@
    </license>
 
    <requires>
-      <import feature="org.eclipse.platform" version="3.7.0.v20110530-9gF7UHNFFt4cwE-pkZDJ7oz-mj4OSEIlu9SEv0f"/>
-      <import feature="org.eclipse.emf.sdk" version="2.7.0.v20110606-0949"/>
-      <import feature="org.eclipse.acceleo.sdk" version="3.1.1.v20110914-0246"/>
+      <import feature="net.fikovnik.projects.taco.feature" version="1.0.0.qualifier"/>
    </requires>
 
    <plugin
-         id="net.fikovnik.projects.taco.core"
+         id="net.fikovnik.projects.taco.latex.core"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="net.fikovnik.projects.taco.ui"
+         id="net.fikovnik.projects.taco.latex.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"
