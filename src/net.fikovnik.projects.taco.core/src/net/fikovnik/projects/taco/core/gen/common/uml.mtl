@@ -42,7 +42,7 @@ unknown feature [feature.name/]
 [/template]
 
 [template public genFeatureLabelWithType(attribute : EAttribute)]
-- [attribute.name /] : [attribute.eAttributeType.name/][genMultiplicity(attribute)/]
+- [attribute.name /] : [attribute.eType.name/][genMultiplicity(attribute)/]
 [/template]
 
 [template public genFeatureLabelWithType(reference : EReference)]

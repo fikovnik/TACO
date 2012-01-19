@@ -47,6 +47,14 @@ THE SOFTWARE.
 	endif
  /]
 
+[comment]
+FIXME: this does not work from whatever reason
+[pkg.eAllContents(EClass) /]
+[/comment]
+[query public getPackageClasses(pkg : EPackage) : Set(EClass) = 
+	pkg.eClassifiers->select(c | c.oclIsKindOf(EClass))->collect(c | c.oclAsType(EClass))->asSet()
+ /]
+
 [query private getSuperPackages(pkg : EPackage) : Sequence(EPackage) =
 	if (pkg.eSuperPackage->notEmpty()) then
 		getSuperPackages(pkg.eSuperPackage)->union(Sequence(EPackage){pkg})
@@ -74,7 +82,6 @@ THE SOFTWARE.
   labeldistance = "3.0"
   labelangle = "20.0"
 [']'/]
-
 [/template]
 
 [template private renderGeneralization(superType : EClass, subType : EClass)]
@@ -83,7 +90,6 @@ THE SOFTWARE.
   arrowtail = "onormal"
   minlen = "1.5"
 [']'/]
-
 [/template]
 
 [template private renderClassName(class : EClass)]
@@ -112,7 +118,6 @@ THE SOFTWARE.
 [/if]
 </TABLE>
 >['];'/]
-
 [/template]
 
 [template public genClass(class : EClass, superClasses : Boolean, attributes : Boolean, references : Boolean, color : String)]
@@ -130,21 +135,17 @@ THE SOFTWARE.
 
 [/template]
 
-[template public genClass(class : EClass)]
+[template public genPackage(pkg : EPackage) {
+	allClasses : Set(EClass) = getPackageClasses(pkg);
+}]
 
-[genClass(class, true, true, true, 'white')/]
+[comment]render only classes themselves without any references[/comment]
+[allClasses.renderClass(true,'white')/]
 
-[/template]
-
-[template public genPackage(pkg : EPackage)]
-
-[comment]
-FIXME: this does not work from whatever reason
-[pkg.eAllContents(EClass).genClass(true, false, true, 'white') /]
-[/comment]
-
-[for (class : EClass | pkg.eClassifiers->select(c | c.oclIsKindOf(EClass))->collect(c | c.oclAsType(EClass)))]
-[class.genClass(true, true, true, 'white')/]
+[comment]render all known references and generalization[/comment]
+[for (class : EClass | allClasses)]
+[class.eSuperTypes->intersection(allClasses).renderGeneralization(class)/]
+[class.eReferences->select(e : EReference | allClasses->includes(e.eReferenceType)).renderReference(class)/]
 [/for]
 
 [/template]

@@ -16,7 +16,7 @@ import org.eclipse.core.runtime.jobs.JobChangeAdapter;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EcoreFactoryImpl;
-import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -42,20 +42,25 @@ public final class SaveClassDiagramAsImageHandler extends AbstractHandler
 			return null;
 		}
 
-		EPackage pkg = EcoreFactoryImpl.eINSTANCE.createEPackage();
+		EPackage pkg = null;
 		
 		Object[] selectedItems = selection.toArray();
 		
+		Copier copier = new Copier(true, true);
+		
 		// if there is only one item selected and it is a package then copy all class from it
 		if (selectedItems.length == 1 && selectedItems[0] instanceof EPackage) {
-			EPackage selPkg = (EPackage) selectedItems[0];
-			pkg.getEClassifiers().addAll(EcoreUtil.copyAll(selPkg.getEClassifiers()));
+			pkg = (EPackage) selectedItems[0];
 		} else {
+			pkg = EcoreFactoryImpl.eINSTANCE.createEPackage();
+			
 			for (Object o : selectedItems) {
-				assert o instanceof EClass;
-				pkg.getEClassifiers().add(EcoreUtil.copy((EClass)o));
+				assert o instanceof EClass;	
+				pkg.getEClassifiers().add((EClass)copier.copy((EClass)o));
 			}
 		}
+		
+		copier.copyReferences();
 		
 		GraphwizOutputType[] types = GraphwizOutputType.values();
 		String[] typeNames = new String[types.length];

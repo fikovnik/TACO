@@ -70,6 +70,7 @@ public final class Graphwiz implements IGraphwiz {
 		StreamGobbler stdout = null;
 		
 		try {
+			System.out.println(in.getAbsolutePath());
 			Process p = r.exec(String.format("%s -T %s %s -o %s", dotPath, type.getFileExtension(),
 					in.getAbsolutePath(), out.getAbsolutePath()));
 			

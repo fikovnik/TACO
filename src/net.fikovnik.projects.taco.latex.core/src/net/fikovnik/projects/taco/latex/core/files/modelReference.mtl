@@ -74,7 +74,7 @@ THE SOFTWARE.
 }]
 [file (src_fname, false, 'UTF-8')]
 [genPrologue() /]
-[pkg.genPackage(false) /]
+[pkg.genPackage() /]
 [genEpilogue() /]
 [/file]
 
