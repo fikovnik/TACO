@@ -65,12 +65,11 @@ public final class SaveClassDiagramAsImageHandler extends AbstractHandler
 			typeExtensions[i] = "*." + types[i].getFileExtension();
 		}
 		
-		
 		FileDialog fd = new FileDialog(
 				HandlerUtil.getActiveShellChecked(event), SWT.SAVE);
 		fd.setOverwrite(true);
 		fd.setText("Save Class Diagram As");
-		fd.setFileName("ClassDiagram");
+		fd.setFileName("ClassDiagram."+types[0].getFileExtension());
 		fd.setFilterExtensions(typeExtensions);
 		fd.setFilterNames(typeNames);
 
