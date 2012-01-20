@@ -43,10 +43,14 @@ public final class GraphwizBuilder implements IGraphwizBuilder {
 		monitor.beginTask("Generating class diagrams", files.size());
 		
 		for (File source : files) {
+			String name = FilenameUtils.removeExtension(source.getName());
+			String targetFileName = name + "." + type.getFileExtension();
+			File target = new File(targetFolder, targetFileName);
+
 			Long oChecksum = registeredFiles.remove(source);
 			if (oChecksum != null) {
 				Long nChecksum = FileUtils.checksumCRC32(source);
-				if (oChecksum.equals(nChecksum)) {
+				if (oChecksum.equals(nChecksum) && target.exists()) {
 					// file has not changed
 					monitor.worked(1);
 					continue;
@@ -54,10 +58,6 @@ public final class GraphwizBuilder implements IGraphwizBuilder {
 			}
 			
 			try {
-				String name = FilenameUtils.removeExtension(source.getName());
-				String targetFileName = name + "." + type.getFileExtension();
-				File target = new File(targetFolder, targetFileName);
-
 				monitor.subTask("Generating: " + targetFileName);
 				graphwiz.generate(source, target, type);
 				monitor.worked(1);
