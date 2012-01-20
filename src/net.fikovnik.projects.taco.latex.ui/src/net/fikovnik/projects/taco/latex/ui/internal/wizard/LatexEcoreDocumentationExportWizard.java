@@ -37,12 +37,12 @@ public final class LatexEcoreDocumentationExportWizard extends
 	
 	@Override
 	protected void doGenerate(IProgressMonitor monitor) throws Exception {
+		// TODO: IoC
 		IGraphwizService graphwizService = TacoCorePlugin.getDefault().getGraphwizService();
 		if (!GraphwizDiagnostics.diagnoze(getShell(), graphwizService)) {
 			graphwizService = null;
 		}
 
-		// TODO: IoC
 		LatexGenerator generator = new LatexGenerator(model.getSourceEcoreFile(), model.getTargetOutput(), properties, graphwizService);
 		generator.generate(monitor);
 	}
